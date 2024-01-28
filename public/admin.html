@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp-style Chat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #e5ddd5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 80%;
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            background-color: #075e54;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .chat-messages {
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 10px;
+        }
+
+        .message p {
+            padding: 8px;
+            border-radius: 5px;
+            word-wrap: break-word;
+            max-width: 70%;
+            position: relative;
+        }
+
+        .message.sent p {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+        }
+
+        .message.received p {
+            background-color: #fff;
+            align-self: flex-start;
+        }
+
+        .emojionearea {
+            margin: 10px;
+        }
+
+        #send {
+            background-color: #075e54;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #send:hover {
+            background-color: #128c7e;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Chat with John</div>
+        <div class="chat-messages">
+            <div class="message sent"><p>Hello there! 😊</p></div>
+            <div class="message received"><p>Hi! How are you? 🌟</p></div>
+            <!-- Add more messages as needed -->
+        </div>
+        <textarea id="message" class="emojionearea" placeholder="Type your message"></textarea>
+        <button id="send">Send</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            $(".emojionearea").emojioneArea();
+        });
+    </script>
+    <script  src="/socket.io/socket.io.js"> </script>
+  <script>
+     var socket = io();
+     document.getElementById("send").addEventListener("click",function (params) {
+        let txt = document.getElementById("message").value;
+        socket.emit("message",txt)
+     })
+  </script>
+
+</body>
+</html>

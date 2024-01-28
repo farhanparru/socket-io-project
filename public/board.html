@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attractive Chat</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #e5ddd5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 80%;
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            background-color: #075e54;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .chat-messages {
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start; /* Align received messages to the start */
+        }
+
+        .message p {
+            padding: 8px;
+            border-radius: 10px;
+            word-wrap: break-word;
+            max-width: 70%;
+            position: relative;
+        }
+
+        .message.sent p {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+        }
+
+        .message.received p {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .sticker {
+            max-width: 70%;
+            border-radius: 10px;
+            margin: 10px;
+        }
+
+        #message {
+            width: calc(100% - 20px);
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px;
+            resize: none;
+        }
+
+        #send {
+            background-color: #075e54;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #send:hover {
+            background-color: #128c7e;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Chat with Farhan</div>
+        <div class="chat-messages">
+            <div class="message sent">
+                <p>Hello there! 😊</p>
+            </div>
+            <div class="message received">
+                <p class="message received" id="message received">This is a received message.  elit.</p>
+            </div>
+            <!-- Add more messages as needed -->
+        </div>
+        <textarea id="message" placeholder="Type your message or select a sticker"></textarea>
+        <button id="send">Send</button>
+    </div>
+
+    <script  src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        socket.on("board_content",function(msg){
+           document.getElementById("message received").innerHTML = msg
+        })
+    </script>
+
+
+</body>
+</html>
